@@ -1,0 +1,56 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js"></script>
+<body>
+	<div id="app">
+        <span v-once v-text="order()"></span><span> : {{ title }}</span><br />
+        <span v-once v-text="order()"></span><span v-once> : {{ title }}</span> - this element use 'v-once'<br />
+        <span v-once v-text="order()"></span><span> : {{ titleText() }}</span><br />
+        <span v-once v-text="order()"></span><span v-once> : {{ titleText() }}</span> - this element use 'v-once'<br />
+        <span><a v-bind:href="link">Google</a></span><br />
+        <button v-on:click="clickButton">{{buttonText}}</button>
+        <button v-on:click="deleteRow">Delete</button>
+        <hr>
+        <p>{{ finishedLink }} : this is just text, not html element. if you want to rend html, use 'v-html' </p>
+        <p v-html="finishedLink"></p>
+	</div>
+</body>
+<script type="text/javascript">
+	this.vue = new Vue({
+		el: '#app',
+        data: {
+            orderIndex: 0,
+            title: "Hello World",
+            buttonText: "click me!",
+            link: "https://google.com",
+            finishedLink: "<a href='http://google.com'>Google Again</a>"
+        },
+        methods: {
+            order: function() {
+                return ++this.orderIndex;
+            },
+            titleText: function() {
+                return this.title;
+            },
+            clickButton: function() {
+                this.title = "Hello Again!"
+                alert("Well done.");
+            },
+            deleteRow: function() {
+                document.getElementsByTagName("span")[0].remove();
+                document.getElementsByTagName("span")[0].remove();
+            }
+        },
+        beforeMount: function(){
+            console.log("beforeMount");
+        },
+        mounted: function() {
+            console.log("vue mounted");
+        },
+        beforeUpdate: function() {
+            console.log("data is changed, so virtual DOM re-render and patch.")
+        },
+        updated: function() {
+            console.log("updated");
+        }
+	});
+</script>
