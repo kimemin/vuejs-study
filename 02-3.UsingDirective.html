@@ -1,0 +1,46 @@
+<html>
+<body>
+	<div id="app">
+		<p>counter: {{ counter }}</p>
+		<span>increase/decrease size: </span><input type="text" v-model.number="step">
+        <button v-on:click="increase(step, $event)">increase</button>
+        <button v-on:click="decrease(step)">decrease</button>
+		<hr>
+		<p id="mousemoveEventContainer" v-on:mousemove="updateCoordinates">
+			Mouse Pointer Coordinates: {{ x }} / {{ y }}
+			- <span v-on:mousemove.stop style="background-color:thistle;">DEAD SPOT! Cooridnates fn not working in here.</span>
+		</p>
+		<hr>
+		<input type="text" v-on:keyup.enter="enterMe">
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			counter: 0,
+			x: 0,
+			y: 0,
+			step: 0
+		},
+		methods: {
+			increase: function(step, event) {
+				// `$event` -> event
+                this.counter += step;
+			},
+            decrease: function(step) {
+                this.counter -= step;
+            },
+			updateCoordinates: function(event) {
+				// this event means 'mousemove'
+				// it only worked when pointer moves in 'mousemoveEventContainer'
+				this.x = event.clientX;
+				this.y = event.clientY;
+			},
+			enterMe: function() {
+				alert("Alert! when you press 'enter'");
+			}
+		}
+	});
+</script>
